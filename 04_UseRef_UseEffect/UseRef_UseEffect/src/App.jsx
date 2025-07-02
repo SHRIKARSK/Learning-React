@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -8,6 +8,8 @@ function App() {
   const [numIncluded, setNumIncluded] = useState(true);
   const [speIncluded, setSpeIncluded] = useState(false);
   const [password, setPassword] = useState("");
+
+  const passwordRef = useRef(null);
 
   const handleSlider = (e) => {
     setLength(Number(e.target.value));
@@ -24,6 +26,8 @@ function App() {
   };
 
   const copyPasswordToClip = () => {
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(temp)
     
   }
 
@@ -59,10 +63,13 @@ function App() {
           <div className="mt-3 flex justify-center">
             <input
               value={password}
+              ref={passwordRef}
               className="bg-white border-none rounded-l-md w-100"
               type="text"
             />
-            <button className="bg-cyan-300 p-2 rounded-r-md">Copy</button>
+            <button
+            onClick={copyPasswordToClip}
+            className="bg-cyan-300 p-2 rounded-r-md">Copy</button>
           </div>
           <div className="flex justify-between">
             <div className="p-5">
